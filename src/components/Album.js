@@ -14,12 +14,14 @@ class Album extends Component {
       currentSong: album.songs[0],
       currentTime: 0,
       duration: album.songs[0].duration,
+      volume: 0.5,
       isPlaying: false,
-      hoveredSong: null
+      isHovered: false
     };
 
     this.audioElement = document.createElement('audio');
     this.audioElement.src = album.songs[0].audioSrc;
+    this.audioElement.volume = this.state.volume;
 }
 
    componentDidMount() {
@@ -29,16 +31,21 @@ class Album extends Component {
        },
        durationchange: e => {
          this.setState({ duration: this.audioElement.duration });
+       },
+       onvolumechange: e => {
+         this.setState({ volume: this.audioElement.volume });
        }
      };
      this.audioElement.addEventListener('timeupdate', this.eventListeners.timeupdate);
      this.audioElement.addEventListener('durationchange', this.eventListeners.durationchange);
+     this.audioElement.addEventListener('onvolumechange', this.eventListeners.onvolumechange);
    }
 
    componentWillUnmount() {
      this.audioElement.src = null;
      this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
      this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
+     this.audioElement.removeEventListener('onvolumechange', this.eventListeners.onvolumechange);
    }
 
    play() {
@@ -86,6 +93,18 @@ class Album extends Component {
      const newTime = this.audioElement.duration * e.target.value;
      this.audioElement.currentTime = newTime;
      this.setState({ currentTime: newTime });
+   }
+
+   handleVolumeChange(e) {
+     this.audioElement.volume = e.target.value;
+     this.setState({ volume: this.audioElement.volume });
+   }
+
+   formatTime(time) {
+     let minutes = parseInt(time / 60);
+     let seconds = parseInt(time % 60);
+     const formatTime = (minutes + ":" + (seconds > 9 ? "" + seconds: "0" + seconds));
+     return formatTime;
    }
 
    handleMouseEnter (song) {
@@ -137,7 +156,7 @@ class Album extends Component {
                <tr key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.handleMouseEnter(song)} onMouseLeave={() => this.handleMouseLeave(song)} >
                  <td>{this.getSongIcon(song,index)}</td>
                  <td> {song.title}</td>
-                 <td> {song.duration}</td>
+                 <td> { this.formatTime( song.duration ) } </td>
                </tr>
                 )
               }
@@ -153,6 +172,8 @@ class Album extends Component {
           handlePrevClick={() => this.handlePrevClick()}
           handleNextClick={() => this.handleNextClick()}
           handleTimeChange={(e) => this.handleTimeChange(e)}
+          handleVolumeChange={ (e) => this.handleVolumeChange(e)}
+          formatTime={ (time) => this.formatTime(time)}
         />
       </section>
     );
