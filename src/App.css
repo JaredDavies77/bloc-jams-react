@@ -7,19 +7,65 @@
   height: 40vmin;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App  {
+  background-color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: 50px;
+  font-family: "Impact";
+  border: 10px solid Orange;
+  margin: 0px;
+  color: Orange;
 }
 
-.App-link {
-  color: #61dafb;
+.landing {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-family: "Arial";
+  border: 10px solid Orange;
+  margin: 10px;
+  color: Orange;
+}
+
+.album {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-family: "Arial";
+  border: 10px solid Orange;
+  margin: 10px;
+  color: Orange;
+}
+
+.library {
+  background-color: orange;
+  font-size: 50px;
+  font-family: "Impact";
+  border: 10px solid Orange;
+  margin: 30px;
+}
+
+.PlayerBar {
+border: 2px solid black;
+width: 250px;
+margin:auto;
+height: 175px;
+margin:auto;
+}
+
+
+
+.App nav {
+  color: orange;
 }
 
 @keyframes App-logo-spin {
